@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		.line { fill: none; }	
+	</style>	
+</head>
+<body>
+	<div class="container"></div>
+
+<script type="text/javascript" src="./d3.js" charset="utf-8"></script>
+<script type="text/javascript" src="./d3-line-chart.js" charset="utf-8"></script>
+<script type="text/javascript">
+	var lc = new LineChart();	
+	var data = {
+		name: 'series',
+		values: [{x: 1, y: 2}, {x: 2, y : 4}, {x:3, y: 3}]
+	};
+	lc.for([data]);
+	lc.plot();
+	
+	new LineChart().for([data]).plot();
+
+	lc = new LineChart('anId');
+	var data = {
+		name: 'series',
+		values: [{x: 1, y: 2}, {x: 2, y : 4}, {x:3, y: 3}]
+	};
+	var eata = {
+		name: 'another',
+		values: [{x: 4, y: 1}, {x: 3, y : 2}, {x:1, y: 2}]
+	};
+	lc.for([data, eata]);
+	lc.plot();
+</script>
+
+</body>
+</html>
