@@ -152,7 +152,19 @@ function LineChart(opts) {
 		.attr("r", 8)
 		.style("stroke", d3.rgb(lc.color(index)).brighter())
 		.style("stroke-width", "0.4em")
-		.style("fill", lc.color(index));
+		.style("fill", lc.color(index))
+		.on("mouseenter", function(d) {
+			var all_points = d3.selectAll('.commit-circle.' + series.name);
+			all_points.forEach(function(p) { 
+				d3.selectAll(p).classed('selected', true);
+			});
+		})
+		.on("mouseleave", function() {
+			var all_points = d3.selectAll('.commit-circle.' + series.name);
+			all_points.forEach(function(p) { 
+				d3.selectAll(p).classed('selected', false);
+			});
+		});
 	}
 
 	function plot_line(series, index) {
@@ -166,15 +178,18 @@ function LineChart(opts) {
 		.style("stroke", lc.color(index));
 	}
 
-	function plot_points(data, index) {
+	function plot_points(series, index) {
+		var data = series.values;
 		lc.graph.selectAll(".commit-circle-" + index).data(data)
 		.enter().append("g")
 		.append("circle")
-		.attr("class", "commit-circle")
+		.attr("class", 'commit-circle')
+		.classed(series.name, true)
 		.attr("cx", function(d) { return lc.x_scale(d.x); })
 		.attr("r", 10)
 		.attr("cy", function(d) { return lc.y_scale(d.y); })
 		.style("stroke", d3.rgb(lc.color(index)).brighter())
+		// .style("stroke-width", "0.4em")
 		.style("fill", lc.color(index))
 		.on("mouseenter", function(d) {
 			var xPosition = d3.event.pageX + 10;
@@ -191,6 +206,7 @@ function LineChart(opts) {
 	}
 
 	lc.plot = function() {
+		// sane defaults on axis line width/color.
 		build_svg(lc);
 		parse_all_data_points(lc);
 		calculate_domain(lc);
@@ -199,7 +215,7 @@ function LineChart(opts) {
 		lc.all_series.forEach(function(val, index, array) {
 			plot_legend(val, index);
 			plot_line(val, index);
-  		plot_points(val.values, index);
+  		plot_points(val, index);
   	});
 	}
 	return lc;
