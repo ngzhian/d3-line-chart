@@ -146,20 +146,21 @@ function LineChart(opts) {
 		.attr("y", 4 + index*20);
 
 		legend.append("circle")
-		.attr("class", "legend-circle-" + index)
+		.attr("class", "legend-circle")
 		.attr("cx", lc.width)
 		.attr("cy", index*20)
 		.attr("r", 8)
 		.style("stroke", d3.rgb(lc.color(index)).brighter())
-		.style("stroke-width", "0.4em")
 		.style("fill", lc.color(index))
 		.on("mouseenter", function(d) {
+			d3.select(this).classed('selected', true);
 			var all_points = d3.selectAll('.commit-circle.' + series.name);
 			all_points.forEach(function(p) { 
 				d3.selectAll(p).classed('selected', true);
 			});
 		})
-		.on("mouseleave", function() {
+		.on("mouseleave", function(d) {
+			d3.select(this).classed('selected', true);
 			var all_points = d3.selectAll('.commit-circle.' + series.name);
 			all_points.forEach(function(p) { 
 				d3.selectAll(p).classed('selected', false);
@@ -192,6 +193,7 @@ function LineChart(opts) {
 		// .style("stroke-width", "0.4em")
 		.style("fill", lc.color(index))
 		.on("mouseenter", function(d) {
+			d3.select(this).classed('selected', true);
 			var xPosition = d3.event.pageX + 10;
 			var yPosition = d3.event.pageY;
 			var tooltip = d3.select("#tooltip")
@@ -201,6 +203,7 @@ function LineChart(opts) {
 			tooltip.classed("hidden", false);
 		})
 		.on("mouseleave", function() {
+			d3.select(this).classed('selected', false);
 			d3.select("#tooltip").classed("hidden", true);
 		});
 	}
