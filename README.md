@@ -37,8 +37,14 @@ d3-line-chart actually provides a lot more options for drawing line chart, you c
 -	`y_scale` scale function for `y` values, defaults to `d3.scale.linear()`
 - `width` the maximum width the line chart can appear in, equals to `graph_width - margin.left - margin.right`, defaults to 960 - 100 - 60
 - `height` the maximum height the line chart can appear in, equals to `graph_height - margin.right - margin.bottom`, defaults to 500 - 20 - 30
+- `tooltip` a function that is called with the tooltip div and the current data point that is hovered to allow you to display your custom div
 
 ## More advanced stuff
 ### Specify colours
+
 ### Tooltips on hover
+By default tooltips are shown on hover, with some simple styling. `x-axis` values are underlined, followed by `y-axis` values.
+
+You can display your own custom tooltip by providing a function called `tooltip` to the constructor. This function must take in 2 parameters, `div`, which is the div of the tooltip, and `point` which is the point that is hovered over.
+
 ### Date on the x axis

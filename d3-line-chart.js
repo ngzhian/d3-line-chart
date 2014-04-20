@@ -13,7 +13,11 @@ function LineChart(opts) {
 		x_parse: opts.x_parse || function(d) { return d; },
 		y_parse: opts.y_parse || function(d) { return d; },
 		x_scale: opts.x_scale || d3.scale.linear(),
-		y_scale: opts.y_scale || d3.scale.linear()
+		y_scale: opts.y_scale || d3.scale.linear(),
+		tooltip: opts.tooltip || function(div, point) {
+			div.select(".title").text(lc.x_axis_text + ': ' + point.x);
+			div.select(".desc").text(point.y);
+		}
 	};
 
 	lc.width = lc.graph_width - lc.margin.left - lc.margin.right;
@@ -89,24 +93,48 @@ function LineChart(opts) {
   	.attr("dy", ".71em")
   	.style("text-anchor", "end")
   	.text(lc.y_axis_text);
-
   }
 
-  lc.plot = function() {
-  	var x = lc.x_scale;
-  	var y = lc.y_scale;
-
+  function build_svg(lc) {
   	var svg = d3.select(lc.parent).append("svg")
   	.attr("id", lc.id)
   	.attr("width", lc.graph_width)
   	.attr("height", lc.graph_height)
   	.append("g")
   	.attr("transform", "translate(" + lc.margin.left + "," + lc.margin.top + ")");
-
   	lc.graph = svg;
+  }
 
-  	var xparse = lc.x_parse;
-  	var yparse = lc.y_parse;
+  function plot_points(series_index, data) {
+  		lc.graph.selectAll(".commit-circle-" + series_index).data(data)
+  		.enter().append("g")
+  		.append("circle")
+  		.attr("class", "commit-circle")
+  		.attr("cx", function(d) { return lc.x_parse(d.x); })
+  		.attr("r", 10)
+  		.attr("cy", function(d) { return lc.y_parse(d.y); })
+  		.style("stroke", d3.rgb(lc.color(series_index)).brighter())
+  		.style("fill", lc.color(series_index))
+  		.on("mouseenter", function(d) {
+  			var xPosition = d3.event.pageX + 10;
+  			var yPosition = d3.event.pageY;
+  			var tooltip = d3.select("#tooltip")
+  			.style("left", xPosition + "px")
+  			.style("top", yPosition + "px");
+  			tooltip.select(".title").text(lc.x_axis_text + ': ' + d.x);
+  			tooltip.select(".desc").text(d.y);
+  			tooltip.classed("hidden", false);
+  		})
+  		.on("mouseleave", function() {
+  			d3.select("#tooltip").classed("hidden", true);
+  		});
+  	}
+
+  lc.plot = function() {
+  	var x = lc.x_scale;
+  	var y = lc.y_scale;
+
+  	build_svg(lc);
 
   	parse_all_data_points(lc);
 
@@ -116,9 +144,10 @@ function LineChart(opts) {
 
   	var color = d3.scale.category10();
   	color.domain(lc.all_series.map(function(d) { return d.name }));
+  	lc.color = color;
 
   	lc.all_series.forEach(function(val, index, array) {
-  		var legend = svg.append("g");
+  		var legend = lc.graph.append("g");
   		legend.append("text")
   		.attr("class", "legend-text-" + index)
   		.text(val.name)
@@ -139,12 +168,14 @@ function LineChart(opts) {
   		.y(function(d) { return y(d.y); });
 
   		var data = val.values;
-  		svg.append("path")
+  		lc.graph.append("path")
   		.attr("class", "line")
   		.attr("d", line(data))
   		.style("stroke", color(index));
 
-  		svg.selectAll(".commit-circle-" + index).data(data)
+  		// plot_points(index, data);
+
+  		lc.graph.selectAll(".commit-circle-" + index).data(data)
   		.enter().append("g")
   		.append("circle")
   		.attr("class", "commit-circle")
@@ -159,8 +190,7 @@ function LineChart(opts) {
   			var tooltip = d3.select("#tooltip")
   			.style("left", xPosition + "px")
   			.style("top", yPosition + "px");
-  			tooltip.select("#title").text((d.x));
-  			tooltip.select("#desc").text(d.y + " commits");
+  			lc.tooltip(tooltip, d);
   			tooltip.classed("hidden", false);
   		})
   		.on("mouseleave", function() {
