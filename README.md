@@ -40,7 +40,9 @@ d3-line-chart actually provides a lot more options for drawing line chart, you c
 - `tooltip` a function that is called with the tooltip div and the current data point that is hovered to allow you to display your custom div
 
 ## More advanced stuff
+
 ### Specify colours
+The color for reach series is taken from `d3.scale.category10()`, which is used to provide a mapping from the `name` of a series to one of ten available colours. If more colours are needed, you need to edit the source, to use `d3.scale.category20()` perhaps.
 
 ### Tooltips on hover
 By default tooltips are shown on hover, with some simple styling. `x-axis` values are underlined, followed by `y-axis` values.
