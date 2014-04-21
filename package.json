@@ -1,0 +1,22 @@
+{
+  "name": "d3-line-chart",
+  "version": "0.1.0",
+  "description": "A d3.js library to draw line charts easily",
+  "main": "d3-line-chart.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ngzhian/d3-line-chart.git"
+  },
+  "keywords": [
+    "d3",
+    "line",
+    "chart",
+    "visualization"
+  ],
+  "author": "Ng Zhi An",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ngzhian/d3-line-chart/issues"
+  },
+  "homepage": "https://github.com/ngzhian/d3-line-chart"
+}
