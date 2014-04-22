@@ -22,6 +22,11 @@ A d3.js library to help you draw line charts easily.
 
 This library uses [UMD](https://github.com/umdjs/umd/blob/master/returnExports.js) to export a single name to the browser window: "`LineChart`". It has a single dependency on `d3` and expects it to be exported to the browser window as well, include `d3` using the `<script>` tag and you will be fine.
 
+If you ever use this on nodejs, you can use `require` as such
+```javascript
+var LineChart = require('./d3-line-chart.js');
+```
+
 ## API
 d3-line-chart actually provides a lot more options for drawing line chart, you can customize the following things.
 - `id` of the svg chart, defaults to no id
