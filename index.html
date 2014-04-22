@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8"> 
 	<style type="text/css">
 		.line { fill: none; }	
-		/*.axis .domain { fill: blue; height: 10px;}*/
 		#tooltip {
 			position: absolute;
 			width: 200px;
@@ -49,7 +49,7 @@
 <script type="text/javascript" src="./d3.js" charset="utf-8"></script>
 <script type="text/javascript" src="./d3-line-chart.js" charset="utf-8"></script>
 <script type="text/javascript">
-// simplest way to plot
+	// simplest way to plot
 	var data = {
 		name: 'series',
 		values: [{x: 1, y: 2}, {x: 2, y : 4}, {x:3, y: 3}]
@@ -74,12 +74,12 @@
 	});
 	var data = {
 		name: 'series',
-		values: [{x: new Date(2014, 4, 1, 0, 0, 0, 0), y: 9}, {x: new Date(2014, 4, 3, 0, 0, 0, 0), y: 2}, {x: new Date(2014, 4, 9, 0, 0, 0, 0), y: 3}]
+		values: [{x: new Date(2014, 4, 1, 0, 0, 0, 0), y: 9},
+		{x: new Date(2014, 4, 3, 0, 0, 0, 0), y: 2},
+		{x: new Date(2014, 4, 9, 0, 0, 0, 0), y: 3}]
 	};
 	lc.for([data]);
 	lc.plot();
-
-
 </script>
 
 </body>
