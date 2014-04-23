@@ -51,21 +51,24 @@
 <script type="text/javascript">
 	// simplest way to plot
 	var data = {
-		name: 'series',
+		name: 'points',
 		values: [{x: 1, y: 2}, {x: 2, y : 4}, {x:3, y: 3}]
 	};
 	new LineChart().for([data]).plot();
 
-	lc = new LineChart({parent: '#multiple'});
-	var data = {
-		name: 'series',
+	data = {
+		name: 'series a',
 		values: [{x: 1, y: 2}, {x: 2, y : 4}, {x:3, y: 3}]
 	};
 	var eata = {
-		name: 'another',
+		name: 'series b',
 		values: [{x: 4, y: 1}, {x: 3, y : 2}, {x:1, y: 2}]
 	};
-	lc.for([data, eata]);
+	lc = new LineChart({
+		parent: '#multiple',
+		all_series: [data, eata]
+	});
+	// lc.for([data, eata]);
 	lc.plot();
 
 	lc = new LineChart({
@@ -73,13 +76,12 @@
 		x_scale: d3.time.scale()
 	});
 	var data = {
-		name: 'series',
+		name: 'dates',
 		values: [{x: new Date(2014, 4, 1, 0, 0, 0, 0), y: 9},
 		{x: new Date(2014, 4, 3, 0, 0, 0, 0), y: 2},
 		{x: new Date(2014, 4, 9, 0, 0, 0, 0), y: 3}]
 	};
-	lc.for([data]);
-	lc.plot();
+	lc.for([data]).plot();
 </script>
 
 </body>
