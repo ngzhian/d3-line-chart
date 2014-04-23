@@ -47,6 +47,8 @@
 		lc.scale_using = function(x_scale, y_scale) {
 			lc.x_scale = x_scale || lc.x_scale;
 			lc.y_scale = y_scale || lc.y_scale;
+			lc.x_scale.range([0, lc.width]);
+			lc.y_scale.range([lc.height, 0]);
 		}
 
 		lc.for = function(data) {
@@ -102,6 +104,8 @@
 			.attr("dy", ".71em")
 			.style("text-anchor", "end")
 			.text(lc.y_axis_text);
+
+
 		}
 
 		function build_svg() {
@@ -112,31 +116,6 @@
 			.append("g")
 			.attr("transform", "translate(" + lc.margin.left + "," + lc.margin.top + ")");
 			lc.graph = svg;
-		}
-
-		function plot_points(series_index, data) {
-			lc.graph.selectAll(".commit-circle-" + series_index).data(data)
-			.enter().append("g")
-			.append("circle")
-			.attr("class", "commit-circle")
-			.attr("cx", function(d) { return lc.x_parse(d.x); })
-			.attr("r", 10)
-			.attr("cy", function(d) { return lc.y_parse(d.y); })
-			.style("stroke", d3.rgb(lc.color(series_index)).brighter())
-			.style("fill", lc.color(series_index))
-			.on("mouseenter", function(d) {
-				var xPosition = d3.event.pageX + 10;
-				var yPosition = d3.event.pageY;
-				var tooltip = d3.select("#tooltip")
-				.style("left", xPosition + "px")
-				.style("top", yPosition + "px");
-				tooltip.select(".title").text(lc.x_axis_text + ': ' + d.x);
-				tooltip.select(".desc").text(d.y);
-				tooltip.classed("hidden", false);
-			})
-			.on("mouseleave", function() {
-				d3.select("#tooltip").classed("hidden", true);
-			});
 		}
 
 		function set_color(lc) {

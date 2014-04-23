@@ -40,6 +40,9 @@
 	<div id="dates">
 		<h1>Use dates as your axis</h1>	
 	</div>
+	<div id="custom-dates">
+		<h1>Specify your own custom format for dates</h1>	
+	</div>
 	<div id="tooltip" class="hidden">
 		<p class="title"></p>
 		<p class="desc"></p>
@@ -68,7 +71,6 @@
 		parent: '#multiple',
 		all_series: [data, eata]
 	});
-	// lc.for([data, eata]);
 	lc.plot();
 
 	lc = new LineChart({
@@ -82,6 +84,18 @@
 		{x: new Date(2014, 4, 9, 0, 0, 0, 0), y: 3}]
 	};
 	lc.for([data]).plot();
+
+  var data = {
+    name: 'custom',
+    values: [{x: "12/04/2014", y: 2}, {x: "13/04/2014", y : 4}, {x:"15/04/2014", y: 3}]
+  };
+  var lc = new LineChart({
+  	parent: '#custom-dates',
+  	x_parse: d3.time.format("%d/%m/%Y").parse,
+  	x_scale: d3.time.scale(),
+  	all_series: [data]
+  });
+  lc.plot();
 </script>
 
 </body>
