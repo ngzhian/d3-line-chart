@@ -13,7 +13,7 @@
 			id: opts.id,
 			parent: opts.parent || 'body',
 			class: 'd3-line-chart',
-			all_series: [],
+			all_series: opts.all_series,
 			graph_width: opts.graph_width || 960,
 			graph_height: opts.graph_height || 500,
 			margin: opts.margin || {top: 20, right: 100, bottom: 30, left: 60},
@@ -163,14 +163,14 @@
 			.style("fill", lc.color(index))
 			.on("mouseenter", function(d) {
 				d3.select(this).classed('selected', true);
-				var all_points = d3.selectAll('.commit-circle.' + series.name);
+				var all_points = d3.selectAll('.commit-circle.' + series.name.replace(/\W/g,'.'));
 				all_points.forEach(function(p) { 
 					d3.selectAll(p).classed('selected', true);
 				});
 			})
 			.on("mouseleave", function(d) {
-				d3.select(this).classed('selected', true);
-				var all_points = d3.selectAll('.commit-circle.' + series.name);
+				d3.select(this).classed('selected', false);
+				var all_points = d3.selectAll('.commit-circle.' + series.name.replace(/\W/g,'.'));
 				all_points.forEach(function(p) { 
 					d3.selectAll(p).classed('selected', false);
 				});
