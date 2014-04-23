@@ -1,6 +1,6 @@
 {
   "name": "d3-line-chart",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A d3.js library to draw line charts easily",
   "main": "d3-line-chart.js",
   "repository": {
