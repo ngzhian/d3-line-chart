@@ -56,3 +56,16 @@ By default tooltips are shown on hover, with some simple styling. `x-axis` value
 You can display your own custom tooltip by providing a function called `tooltip` to the constructor. This function must take in 2 parameters, `div`, which is the div of the tooltip, and `point` which is the point that is hovered over.
 
 ### Date on the x axis
+You can specify other scales besides `d3.scale.linear()` by passing the function into `LineChart()`
+``` javascript
+lc = new LineChart({
+	x_scale: d3.time.scale()
+});
+var data = {
+	name: 'series',
+	values: [{x: new Date(2014, 4, 1, 0, 0, 0, 0), y: 9},
+	{x: new Date(2014, 4, 3, 0, 0, 0, 0), y: 2},
+	{x: new Date(2014, 4, 9, 0, 0, 0, 0), y: 3}]
+};
+lc.for([data]).plot();
+```
