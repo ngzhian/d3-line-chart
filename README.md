@@ -69,3 +69,5 @@ var data = {
 };
 lc.for([data]).plot();
 ```
+
+Also on [Omniref](https://www.omniref.com/js/npm/d3-line-chart/0.1.0)
